@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>askLio — Growth Associate Case</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --white: #ffffff;
+            --gray-50: #fafafa;
+            --gray-100: #f5f5f5;
+            --gray-200: #e5e5e5;
+            --gray-300: #d4d4d4;
+            --gray-400: #a3a3a3;
+            --gray-500: #737373;
+            --gray-600: #525252;
+            --gray-700: #404040;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            color: var(--black);
+            background: var(--white);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 1.25rem 3rem;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .nav-logo {
+            font-weight: 700; font-size: 1.1rem; letter-spacing: -0.02em;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+
+        .nav-logo img { height: 26px; width: auto; }
+
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a {
+            text-decoration: none; color: var(--gray-500); font-size: 0.85rem;
+            font-weight: 500; letter-spacing: 0.02em; text-transform: uppercase; transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--black); }
+
+        /* HERO */
+        .hero { padding: 10rem 3rem 5rem; max-width: 900px; }
+        .hero-label { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 1.5rem; }
+        .hero h1 { font-size: clamp(2.5rem, 5vw, 3.8rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+        .hero p { font-size: 1.15rem; color: var(--gray-600); max-width: 600px; line-height: 1.7; }
+        .hero-meta { margin-top: 2.5rem; display: flex; gap: 3rem; }
+        .hero-meta-item { display: flex; flex-direction: column; }
+        .hero-meta-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gray-400); margin-bottom: 0.25rem; }
+        .hero-meta-value { font-size: 0.95rem; font-weight: 600; }
+
+        /* SECTIONS */
+        section { padding: 5rem 3rem; }
+        .section-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 1rem; }
+        .section-title { font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 1rem; }
+        .section-subtitle { font-size: 1.05rem; color: var(--gray-500); max-width: 600px; line-height: 1.7; margin-bottom: 3rem; }
+        .dark-section { background: var(--black); color: var(--white); }
+        .dark-section .section-label { color: var(--gray-400); }
+        .dark-section .section-subtitle { color: var(--gray-400); }
+
+        /* ICP */
+        .icp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem; }
+        .icp-card { border: 1px solid var(--gray-200); border-radius: 8px; padding: 2rem; transition: border-color 0.2s; }
+        .icp-card:hover { border-color: var(--gray-400); }
+        .icp-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; }
+        .icp-card p { font-size: 0.9rem; color: var(--gray-500); line-height: 1.6; }
+        .hl { color: var(--black); font-weight: 500; }
+
+        .tier-section { margin-top: 3rem; }
+        .tier-row { display: flex; align-items: flex-start; gap: 1.5rem; padding: 1.25rem 0; border-bottom: 1px solid var(--gray-200); }
+        .tier-badge { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 0.3rem 0.75rem; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
+        .tier-1 { background: var(--black); color: var(--white); }
+        .tier-2 { background: var(--gray-200); color: var(--gray-700); }
+        .tier-content h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.25rem; }
+        .tier-content p { font-size: 0.85rem; color: var(--gray-500); }
+
+        .why-not { margin-top: 2.5rem; padding: 1.5rem 2rem; background: var(--gray-50); border-radius: 8px; border: 1px dashed var(--gray-300); }
+        .why-not h4 { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--gray-600); }
+        .why-not p { font-size: 0.85rem; color: var(--gray-500); line-height: 1.6; }
+
+        .persona-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
+        .persona-card { padding: 2rem; background: var(--gray-50); border-radius: 8px; border-left: 3px solid var(--black); }
+        .persona-tag { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 0.5rem; }
+        .persona-card h4 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; }
+        .persona-card p { font-size: 0.88rem; color: var(--gray-500); line-height: 1.6; }
+
+        .channels-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 2rem; }
+        .channel-item { text-align: center; padding: 1.5rem 1rem; border: 1px solid var(--gray-200); border-radius: 8px; }
+        .channel-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .channel-item h4 { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.25rem; }
+        .channel-item p { font-size: 0.75rem; color: var(--gray-500); }
+
+        .form-insight { margin-top: 2.5rem; padding: 1.5rem 2rem; background: var(--gray-50); border-radius: 8px; border-left: 3px solid var(--black); }
+        .form-insight h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .form-insight p { font-size: 0.85rem; color: var(--gray-500); line-height: 1.6; }
+
+        /* LOOM */
+        .loom-section { background: var(--gray-50); text-align: center; }
+        .loom-container { max-width: 800px; margin: 0 auto; }
+        .loom-placeholder { width: 100%; aspect-ratio: 16/9; background: var(--black); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1rem; cursor: pointer; transition: opacity 0.2s; }
+        .loom-placeholder:hover { opacity: 0.9; }
+        .loom-play { width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; border: 2px solid rgba(255,255,255,0.3); }
+        .loom-play svg { width: 24px; height: 24px; fill: white; margin-left: 3px; }
+        .loom-text { color: rgba(255,255,255,0.6); font-size: 0.85rem; font-weight: 500; }
+
+        /* ========== WORKFLOW — ORGANIC FLOWING DESIGN ========== */
+        .workflow-wrap { max-width: 1100px; margin: 0 auto; }
+
+        /* Main horizontal flow */
+        .wf-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            position: relative;
+        }
+
+        /* Each phase is a horizontal band */
+        .wf-phase {
+            display: flex;
+            align-items: stretch;
+            position: relative;
+        }
+
+        .wf-phase + .wf-phase {
+            margin-top: -1px;
+        }
+
+        /* Connector between phases */
+        .wf-connector {
+            display: flex;
+            justify-content: center;
+            padding: 0.5rem 0;
+        }
+
+        .wf-connector-line {
+            width: 2px;
+            height: 32px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(255,255,255,0.06));
+        }
+
+        /* Horizontal row of cards */
+        .wf-row {
+            display: flex;
+            gap: 1rem;
+            align-items: stretch;
+            width: 100%;
+        }
+
+        .wf-row.centered {
+            justify-content: center;
+        }
+
+        /* Single flow card */
+        .wf-card {
+            flex: 1;
+            max-width: 340px;
+            padding: 1.5rem 1.6rem;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .wf-card:hover {
+            border-color: rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.05);
+            transform: translateY(-2px);
+        }
+
+        .wf-card.wide {
+            max-width: 520px;
+        }
+
+        .wf-card.full {
+            max-width: 100%;
+            flex: unset;
+        }
+
+        /* Card accent colors */
+        .wf-card.entry { border-top: 3px solid #22c55e; }
+        .wf-card.process { border-top: 3px solid rgba(255,255,255,0.15); }
+        .wf-card.score { border-top: 3px solid #818cf8; }
+        .wf-card.hot-card { border-top: 3px solid #ef4444; }
+        .wf-card.warm-card { border-top: 3px solid #f59e0b; }
+        .wf-card.cold-card { border-top: 3px solid #6b7280; }
+        .wf-card.action { border-top: 3px solid #ef4444; }
+        .wf-card.pending { border-top: 3px solid #6b7280; border-style: dashed; border-top-style: dashed; background: rgba(255,255,255,0.015); }
+
+        .wf-card-label {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+            color: var(--gray-500);
+        }
+
+        .wf-card-label.green { color: #22c55e; }
+        .wf-card-label.purple { color: #818cf8; }
+        .wf-card-label.red { color: #ef4444; }
+        .wf-card-label.amber { color: #f59e0b; }
+        .wf-card-label.muted { color: #6b7280; }
+
+        .wf-card h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 0.35rem;
+            line-height: 1.3;
+        }
+
+        .wf-card p {
+            font-size: 0.8rem;
+            color: var(--gray-400);
+            line-height: 1.55;
+        }
+
+        /* Arrow between cards in a row */
+        .wf-arrow {
+            display: flex;
+            align-items: center;
+            padding: 0 0.25rem;
+            color: rgba(255,255,255,0.15);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        /* Down arrow between rows */
+        .wf-down {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.75rem 0;
+            color: rgba(255,255,255,0.12);
+            font-size: 1.4rem;
+        }
+
+        /* Branch split */
+        .wf-branch {
+            display: flex;
+            gap: 1rem;
+            width: 100%;
+            position: relative;
+        }
+
+        .wf-branch-label {
+            position: absolute;
+            top: -1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gray-500);
+            background: var(--black);
+            padding: 0 0.75rem;
+            white-space: nowrap;
+        }
+
+        /* Scoring mini grid */
+        .wf-score-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.35rem;
+            margin-top: 0.6rem;
+        }
+
+        .wf-score-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.3rem 0.45rem;
+            background: rgba(255,255,255,0.03);
+            border-radius: 3px;
+            font-size: 0.68rem;
+            color: var(--gray-400);
+        }
+
+        .wf-score-item strong {
+            color: var(--white);
+            font-weight: 700;
+            font-size: 0.78rem;
+        }
+
+        /* Route badges */
+        .wf-route-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.6rem;
+        }
+
+        .wf-route-badge {
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.68rem;
+            font-weight: 600;
+        }
+
+        .wf-route-badge.hot { background: rgba(239,68,68,0.12); color: #ef4444; }
+        .wf-route-badge.warm { background: rgba(245,158,11,0.12); color: #f59e0b; }
+        .wf-route-badge.cold { background: rgba(107,114,128,0.12); color: #9ca3af; }
+
+        /* TOOLS */
+        .tools-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 2rem; }
+        .tool-card { text-align: center; padding: 2rem 1.5rem; border: 1px solid var(--gray-200); border-radius: 8px; transition: border-color 0.2s; }
+        .tool-card:hover { border-color: var(--gray-400); }
+        .tool-icon { width: 48px; height: 48px; margin: 0 auto 1rem; background: var(--gray-100); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .tool-card h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.35rem; }
+        .tool-card p { font-size: 0.8rem; color: var(--gray-500); line-height: 1.5; }
+        .tool-role { margin-top: 0.75rem; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--gray-400); }
+        .tools-connection { text-align: center; padding: 1.5rem 0 0; color: var(--gray-400); font-size: 0.85rem; font-weight: 500; }
+
+        /* EVOLUTION */
+        .evolution-list { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; max-width: 700px; }
+        .evolution-item { display: grid; grid-template-columns: 32px 1fr; gap: 1rem; align-items: start; }
+        .evolution-num { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--gray-300); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600; color: var(--gray-500); flex-shrink: 0; }
+        .evolution-item h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.25rem; }
+        .evolution-item p { font-size: 0.85rem; color: var(--gray-500); line-height: 1.6; }
+        .evolution-note { margin-top: 2.5rem; padding: 1.5rem 2rem; background: var(--gray-50); border-radius: 8px; border-left: 3px solid var(--black); max-width: 700px; }
+        .evolution-note p { font-size: 0.88rem; color: var(--gray-600); line-height: 1.6; font-style: italic; }
+
+        footer { padding: 2rem 3rem; border-top: 1px solid var(--gray-200); text-align: center; font-size: 0.8rem; color: var(--gray-400); }
+
+        .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            nav { padding: 1rem 1.5rem; }
+            .nav-links { display: none; }
+            .hero { padding: 7rem 1.5rem 3rem; }
+            section { padding: 3rem 1.5rem; }
+            .icp-grid, .persona-row { grid-template-columns: 1fr; }
+            .channels-grid, .tools-row { grid-template-columns: repeat(2, 1fr); }
+            .hero-meta { flex-direction: column; gap: 1rem; }
+            .wf-row, .wf-branch { flex-direction: column; align-items: center; }
+            .wf-arrow { transform: rotate(90deg); padding: 0.25rem 0; }
+            .wf-card { max-width: 100% !important; }
+            .wf-score-grid { grid-template-columns: 1fr; }
+            .wf-route-row { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-logo">
+        askLio — Growth Case
+    </div>
+    <ul class="nav-links">
+        <li><a href="#icp">ICP</a></li>
+        <li><a href="#walkthrough">Walkthrough</a></li>
+        <li><a href="#workflow">Workflow</a></li>
+        <li><a href="#stack">Stack</a></li>
+        <li><a href="#evolution">Evolution</a></li>
+    </ul>
+</nav>
+
+<header class="hero fade-in">
+    <div class="hero-label">Growth Associate — Case Study</div>
+    <h1>Inbound Lead Qualification for askLio's Enterprise Pipeline</h1>
+    <p>A working system that enriches, scores, and routes enterprise procurement leads in real time — built in Clay, connected to Slack and Attio.</p>
+    <div class="hero-meta">
+        <div class="hero-meta-item">
+            <span class="hero-meta-label">Prepared by</span>
+            <span class="hero-meta-value">Lia Hofmann</span>
+        </div>
+        <div class="hero-meta-item">
+            <span class="hero-meta-label">Date</span>
+            <span class="hero-meta-value">March 2026</span>
+        </div>
+        <div class="hero-meta-item">
+            <span class="hero-meta-label">Tools</span>
+            <span class="hero-meta-value">Clay · Clearbit · Slack · Attio</span>
+        </div>
+    </div>
+</header>
+
+<section id="icp" class="fade-in">
+    <div class="section-label">01 — ICP & Targeting</div>
+    <div class="section-title">Who should askLio go after — and why</div>
+    <div class="section-subtitle">askLio's proven traction is DACH-first, enterprise industrial. The ICP is built from existing customers: TÜV SÜD, REHAU, Dormakaba, Burda, AL-KO.</div>
+
+    <div class="icp-grid">
+        <div class="icp-card"><h3>Company Size</h3><p><span class="hl">5,000–50,000 employees</span> with €1B+ revenue. Large enough for complex indirect procurement, agile enough to buy without 12-month cycles.</p></div>
+        <div class="icp-card"><h3>Geography</h3><p><span class="hl">DACH-first</span> (Germany, Austria, Switzerland) — proven sales motion, German-language product, SAP-native, GDPR-compliant. Then EU expansion.</p></div>
+        <div class="icp-card"><h3>Procurement Maturity</h3><p>Existing P2P system (<span class="hl">SAP Ariba, Coupa, or Jaggaer</span>) that underdelivers. High tail spend. Understaffed procurement teams relative to request volume.</p></div>
+        <div class="icp-card"><h3>Buying Signal</h3><p><span class="hl">Board pressure to cut costs</span>, failed P2P implementation, hiring procurement roles (= understaffed), or knowledge loss from retiring staff.</p></div>
+    </div>
+
+    <div class="tier-section">
+        <div class="tier-row"><span class="tier-badge tier-1">Tier 1</span><div class="tier-content"><h4>Industrial Manufacturing · Professional Services · Media & Conglomerates</h4><p>Mirrors existing customer profile. High indirect spend complexity, thousands of non-procurement requesters. Examples: Knorr-Bremse, Wacker Chemie, GEA Group.</p></div></div>
+        <div class="tier-row"><span class="tier-badge tier-2">Tier 2</span><div class="tier-content"><h4>Automotive Suppliers · Pharma & Chemicals · Energy & Utilities</h4><p>Strong problem-market fit but longer sales cycles. Requires industry-specific case studies before approaching.</p></div></div>
+    </div>
+
+    <div class="why-not"><h4>Why not BMW or Siemens?</h4><p>BMW built their own internal procurement AI (AIconic, 1,800 users). Siemens runs JAGGAER + Scoutbee + UiPath — heavily instrumented, 12+ month procurement cycle. The sweet spot is the DACH Mittelstand: large enough to need procurement AI, agile enough to actually buy it.</p></div>
+
+    <div class="persona-row">
+        <div class="persona-card"><div class="persona-tag">Primary Persona</div><h4>Head of Procurement / CPO / VP Purchasing</h4><p>Team is buried in operational tasks. Can't shift to strategic work. Feels the pain of manual processes daily and has the authority to sign.</p></div>
+        <div class="persona-card"><div class="persona-tag">Secondary Persona</div><h4>Head of Digital / IT / Transformation</h4><p>Evaluates and champions AI tools for the procurement team. Has budget, has veto power on integrations. Often the person who discovers askLio first.</p></div>
+    </div>
+
+    <h3 style="margin-top: 3rem; font-size: 1.1rem; font-weight: 600;">Inbound Channels</h3>
+    <div class="channels-grid">
+        <div class="channel-item"><div class="channel-icon">🌐</div><h4>Demo Form</h4><p>Typeform on asklio.ai</p></div>
+        <div class="channel-item"><div class="channel-icon">📞</div><h4>Phone</h4><p>+49 and +1 numbers on site</p></div>
+        <div class="channel-item"><div class="channel-icon">💼</div><h4>LinkedIn</h4><p>DMs, comments, content</p></div>
+        <div class="channel-item"><div class="channel-icon">🎤</div><h4>Events</h4><p>DPW, BME conferences</p></div>
+    </div>
+
+    <div class="form-insight"><h4>Observation: askLio's form captures only first name, last name, phone, and email</h4><p>No company name, no role. Every inbound lead arrives with minimal context. Rather than adding form fields and friction, the solution is to let Clay enrich the company profile from the email domain alone. One optional "Company Name" field is recommended as a fallback for personal email addresses.</p></div>
+</section>
+
+<section id="walkthrough" class="loom-section fade-in">
+    <div class="loom-container">
+        <div class="section-label">02 — Live Walkthrough</div>
+        <div class="section-title" style="margin-bottom: 2rem;">Watch the workflow in action</div>
+        <div class="loom-placeholder">
+            <div class="loom-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+            <span class="loom-text">Loom video — paste your link here</span>
+        </div>
+    </div>
+</section>
+
+<!-- WORKFLOW — ORGANIC FLOWING DESIGN -->
+<section id="workflow" class="dark-section fade-in">
+    <div class="workflow-wrap">
+        <div class="section-label">03 — Workflow Design</div>
+        <div class="section-title" style="color: var(--white);">From demo request to AE call — in under 60 seconds</div>
+        <div class="section-subtitle">Every inbound lead is enriched, scored, and routed automatically. No manual triage.</div>
+
+        <div class="wf-flow">
+
+            <!-- ROW 1: Entry -->
+            <div class="wf-row centered">
+                <div class="wf-card entry wide">
+                    <div class="wf-card-label green">Inbound Trigger</div>
+                    <h4>Lead enters via demo form</h4>
+                    <p>Prospect submits Typeform — first name, last name, phone, email. Response flows into Clay table automatically. No manual data entry.</p>
+                </div>
+            </div>
+
+            <div class="wf-down">↓</div>
+
+            <!-- ROW 2: Detect + Enrich -->
+            <div class="wf-row centered">
+                <div class="wf-card process">
+                    <div class="wf-card-label">Filter</div>
+                    <h4>Email type detection</h4>
+                    <p>Formula checks corporate vs. personal email. Personal emails are flagged — no enrichment credits wasted on gmail or hotmail.</p>
+                </div>
+                <div class="wf-arrow">→</div>
+                <div class="wf-card process">
+                    <div class="wf-card-label">Enrich</div>
+                    <h4>Clearbit company enrichment</h4>
+                    <p>Domain extracted from email. Returns company name, employee count, HQ country, industry, description. Only runs on corporate emails.</p>
+                </div>
+            </div>
+
+            <div class="wf-down">↓</div>
+
+            <!-- ROW 3: Score -->
+            <div class="wf-row centered">
+                <div class="wf-card score wide">
+                    <div class="wf-card-label purple">ICP Scoring — 0 to 5 Points</div>
+                    <h4>Automatic lead qualification</h4>
+                    <p>Every lead is scored against the ICP definition. Additive model — even with a missing field, strong leads still surface.</p>
+                    <div class="wf-score-grid">
+                        <div class="wf-score-item"><strong>+2</strong> Employees ≥ 5,000</div>
+                        <div class="wf-score-item"><strong>+1</strong> Employees 1K–4,999</div>
+                        <div class="wf-score-item"><strong>+1</strong> HQ in DACH region</div>
+                        <div class="wf-score-item"><strong>+1</strong> ICP industry match</div>
+                        <div class="wf-score-item"><strong>+1</strong> Procurement or Digital title</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wf-down">↓</div>
+
+            <!-- ROW 4: Route — Branch -->
+            <div class="wf-branch" style="position: relative; padding-top: 0.5rem;">
+                <div class="wf-card hot-card" style="flex: 1;">
+                    <div class="wf-card-label red">🔥 Hot — Score 4-5</div>
+                    <h4>Slack alert fires instantly</h4>
+                    <p>Formatted message with company name, ICP score, phone number, and "Call within 1 hour" action. All context the AE needs.</p>
+                </div>
+                <div class="wf-card warm-card" style="flex: 1;">
+                    <div class="wf-card-label amber">⏳ Warm — Score 2-3</div>
+                    <h4>Call within 24 hours</h4>
+                    <p>Lead enters Attio with full enrichment data. AE follows up with relevant case study (TÜV SÜD, REHAU).</p>
+                </div>
+                <div class="wf-card cold-card" style="flex: 1;">
+                    <div class="wf-card-label muted">❄️ Cold — Score 0-1</div>
+                    <h4>Nurture or deprioritize</h4>
+                    <p>Small companies, unknown domains, irrelevant personas. Entered into CRM but no immediate action.</p>
+                </div>
+            </div>
+
+            <div class="wf-down">↓</div>
+
+            <!-- ROW 5: Actions side by side -->
+            <div class="wf-row centered">
+                <div class="wf-card action">
+                    <div class="wf-card-label red">Action</div>
+                    <h4>AE calls the prospect</h4>
+                    <p>AE sees Slack notification, opens Attio for full context, and calls within 1 hour. Phone number is enriched and ready. No answer? Lead goes into Lemlist follow-up sequence.</p>
+                </div>
+                <div class="wf-arrow">+</div>
+                <div class="wf-card process">
+                    <div class="wf-card-label">CRM</div>
+                    <h4>All leads → Attio</h4>
+                    <p>Every lead — hot, warm, or cold — is pushed to Attio via REST API automatically. Single source of truth for the sales team.</p>
+                </div>
+            </div>
+
+            <div class="wf-down" style="opacity: 0.4;">· · ·</div>
+
+            <!-- ROW 6: Edge case -->
+            <div class="wf-row centered">
+                <div class="wf-card pending" style="max-width: 420px;">
+                    <div class="wf-card-label muted">Edge Case</div>
+                    <h4>Personal email → Pending manual review</h4>
+                    <p>gmail, hotmail, yahoo skip enrichment. Status: "Pending." Future: automated Lemlist reply asking "Which company are you with?" If they respond, they re-enter the scoring pipeline.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="stack" class="fade-in">
+    <div class="section-label">04 — Tools & Stack</div>
+    <div class="section-title">What connects to what</div>
+    <div class="tools-row">
+        <div class="tool-card"><div class="tool-icon">🧱</div><h4>Clay</h4><p>Enrichment engine + scoring model. Receives form data, enriches via Clearbit, runs ICP scoring, triggers downstream actions.</p><div class="tool-role">Orchestrator</div></div>
+        <div class="tool-card"><div class="tool-icon">🔍</div><h4>Clearbit</h4><p>Company data from email domains. Returns employee count, HQ country, industry, description.</p><div class="tool-role">Enrichment</div></div>
+        <div class="tool-card"><div class="tool-icon">⚡</div><h4>Slack</h4><p>Real-time hot lead alerts via webhook. Formatted message with all context an AE needs to call.</p><div class="tool-role">Notification</div></div>
+        <div class="tool-card"><div class="tool-icon">📋</div><h4>Attio</h4><p>CRM and system of record. All leads pushed automatically via REST API.</p><div class="tool-role">CRM</div></div>
+    </div>
+    <div class="tools-connection">Typeform → Clay → Clearbit → Scoring → Slack + Attio</div>
+</section>
+
+<section id="evolution" class="fade-in">
+    <div class="section-label">05 — Future Evolution</div>
+    <div class="section-title">What I'd build next with more time</div>
+    <div class="section-subtitle">The core workflow is built and working. This is how I imagine the fully automated version — these are the next steps on the roadmap.</div>
+    <div class="evolution-list">
+        <div class="evolution-item"><div class="evolution-num">1</div><div><h4>Lemlist follow-up sequences</h4><p>Warm leads who don't answer the call get an automated sequence with relevant case studies (TÜV SÜD for testing, REHAU for manufacturing). Personal email leads receive "Which company are you with?" automatically.</p></div></div>
+        <div class="evolution-item"><div class="evolution-num">2</div><div><h4>Attio analytics & closed-loop feedback</h4><p>Analyze which lead scores actually convert to meetings and deals. Refine scoring weights based on real conversion data. Learn from the pipeline.</p></div></div>
+        <div class="evolution-item"><div class="evolution-num">3</div><div><h4>Multi-channel aggregation</h4><p>Unify LinkedIn DMs, phone inquiries, and event sign-ups into the same Clay pipeline via webhooks and Zapier.</p></div></div>
+        <div class="evolution-item"><div class="evolution-num">4</div><div><h4>Intent signals & automated re-entry</h4><p>Add hiring signals, funding rounds, leadership changes. When a personal email lead replies with their company name, AI parses it and re-runs enrichment automatically.</p></div></div>
+    </div>
+    <div class="evolution-note"><p>The core qualification engine is built and demonstrated. The evolution above shows the path from working MVP to a fully automated production system.</p></div>
+</section>
+
+<footer>Lia Hofmann · Growth Associate Case · March 2026</footer>
+
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
